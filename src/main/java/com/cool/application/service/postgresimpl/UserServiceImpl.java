@@ -1,7 +1,8 @@
 package com.cool.application.service.postgresimpl;
 
 import com.cool.application.dao.UserDao;
-import com.cool.application.db.postgres.queries.user.UserQueries;
+import com.cool.application.db.Queries;
+import com.cool.application.operations.UserOperations;
 import com.cool.application.entity.User;
 import com.cool.application.service.UserService;
 
@@ -10,10 +11,12 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
+    private final Queries userQueries;
     private String sql;
 
-    public UserServiceImpl(UserDao userDao) {
+    public UserServiceImpl(UserDao userDao, Queries userQueries) {
         this.userDao = userDao;
+        this.userQueries = userQueries;
     }
 
     @Override
@@ -38,7 +41,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(User user) {
-        sql = UserQueries.UPDATE_USER;
+        sql = userQueries.getQuery(UserOperations.UPDATE_USER.getOperationName());
         userDao.updateUser(user, sql);
     }
 
