@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class DeleteUserCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
+    public String execute(HttpServletRequest req) {
         return null;
     }
 

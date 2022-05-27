@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public class GetUserByFamilyNameCommand implements Command {
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) {
+    public String execute(HttpServletRequest req) {
         return null;
     }
 
