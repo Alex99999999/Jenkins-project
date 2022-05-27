@@ -3,6 +3,7 @@ package com.cool.application.servlet.webcommand;
 import com.cool.application.context.ApplicationContext;
 import com.cool.application.servlet.webcommand.impl.DefaultCommand;
 import com.cool.application.servlet.webcommand.impl.GetUserByIdCommand;
+import com.cool.application.servlet.webcommand.impl.UpdateUserCommand;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +27,7 @@ public class CommandContainer {
 
     private void populateCommands() {
         commands = new HashMap<>();
-        commands.put("get_by_id", new GetUserByIdCommand(applicationContext.getUserService()));
+        commands.put("update_user", new UpdateUserCommand(applicationContext.getUserService()));
     }
 
 

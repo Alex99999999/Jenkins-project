@@ -10,10 +10,10 @@ public interface UserDao {
 
     void deleteUser();
 
-    User getUserById(int id);
+    User getUserById(long id);
 
     User getUserByName(String name);
 
-    void updateUser();
+    void updateUser(User user, String sql);
 
 }
