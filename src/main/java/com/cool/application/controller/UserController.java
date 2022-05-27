@@ -21,8 +21,8 @@ import java.io.IOException;
 @WebServlet("/user")
 public class UserController extends HttpServlet {
 
-  CommandContainer commandContainer;
-  Command command;
+  private CommandContainer commandContainer;
+  private Command command;
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)

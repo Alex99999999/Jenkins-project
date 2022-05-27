@@ -6,5 +6,4 @@ public interface ApplicationContext {
 
     UserService getUserService();
 
-
 }

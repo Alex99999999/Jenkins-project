@@ -2,7 +2,6 @@ package com.cool.application.servlet.webcommand;
 
 import com.cool.application.context.ApplicationContext;
 import com.cool.application.servlet.webcommand.impl.DefaultCommand;
-import com.cool.application.servlet.webcommand.impl.GetUserByIdCommand;
 import com.cool.application.servlet.webcommand.impl.UpdateUserCommand;
 
 import java.util.HashMap;
@@ -15,9 +14,6 @@ public class CommandContainer {
 
     public CommandContainer(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
-    }
-
-    public CommandContainer() {
         populateCommands();
     }
 

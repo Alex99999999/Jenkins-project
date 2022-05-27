@@ -4,7 +4,6 @@ import com.cool.application.service.UserService;
 import com.cool.application.servlet.webcommand.Command;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Author Dmitriy

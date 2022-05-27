@@ -3,8 +3,6 @@ package com.cool.application.utils;
 import com.cool.application.exception.db.ResourceClosingFailureException;
 import com.cool.application.notifications.warnings.DbWarnings;
 
-import java.sql.Connection;
-
 public class DbUtils {
 
     public static void close(AutoCloseable ac)  {
