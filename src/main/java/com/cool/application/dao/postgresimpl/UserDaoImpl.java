@@ -54,7 +54,6 @@ public class UserDaoImpl implements UserDao {
             stmt.setString(++k, DbUtils.escapeForPstmt(user.getGivenName()));
             stmt.setString(++k, DbUtils.escapeForPstmt(user.getPhoneNumber()));
             stmt.setInt(++k, user.getAge());
-            stmt.setLong(++k, user.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new UserUpdateFailureException(String.format(UserWarnings.USER_UPDATE_FAILURE, id));
