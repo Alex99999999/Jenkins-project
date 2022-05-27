@@ -10,6 +10,10 @@ public class User implements Serializable {
     private String phoneNumber;
     private int age;
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public long getId() {
         return id;
     }
@@ -46,4 +50,14 @@ public class User implements Serializable {
         this.age = age;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", familyName='" + familyName + '\'' +
+                ", givenName='" + givenName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }
