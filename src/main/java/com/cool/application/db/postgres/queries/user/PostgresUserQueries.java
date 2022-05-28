@@ -8,22 +8,19 @@ import java.util.Map;
 
 public class PostgresUserQueries implements Queries {
 
-  private Map<String, String> queries;
+    private Map<String, String> queries;
 
-  public PostgresUserQueries() {
-    populateQueries();
-  }
+    public PostgresUserQueries() {
+        populateQueries();
+    }
 
-  private void populateQueries() {
-    queries = new HashMap<>();
-    queries.put(UserOperations.UPDATE_USER.getOperationName(),
-        "UPDATE user SET family_name = ?,  given_name = ?, phone_number = ?, age = ? WHERE id = ?;");
-    queries.put(UserOperations.CREATE_USER.getOperationName(),
-        "INSERT INTO user (id,family_name,given_name,phone_number, age) VALUES (?,?,?,?,?)");
-  }
+    private void populateQueries() {
+        queries = new HashMap<>();
+        queries.put(UserOperations.UPDATE_USER.getOperationName(), "UPDATE user SET family_name = ?,  given_name = ?, phone_number = ?, age = ? WHERE id = ?;");
+    }
 
-  public String getQuery(String key) {
-    return queries.get(key);
-  }
+    public String getQuery(String key) {
+        return queries.get(key);
+    }
 
 }

@@ -3,7 +3,6 @@ package com.cool.application.dao.postgresimpl;
 import com.cool.application.dao.UserDao;
 import com.cool.application.db.DbConnectionProvider;
 import com.cool.application.entity.User;
-import com.cool.application.exception.user.UserCreateFailureException;
 import com.cool.application.exception.user.UserNotFoundException;
 import com.cool.application.exception.user.UserUpdateFailureException;
 import com.cool.application.notifications.warnings.UserWarnings;
@@ -64,30 +63,6 @@ public class UserDaoImpl implements UserDao {
         }
 
     }
-
-    @Override
-    public void createUser(User user, String sql) {
-        Connection con = connectionProvider.getConnection();
-        PreparedStatement stmt = null;
-        long id = user.getId();
-        try {
-            stmt = con.prepareStatement(sql);
-            int k = 0;
-            stmt.setLong(++k, user.getId());
-            stmt.setString(++k, DbUtils.escapeForPstmt(user.getFamilyName()));
-            stmt.setString(++k, DbUtils.escapeForPstmt(user.getGivenName()));
-            stmt.setString(++k, DbUtils.escapeForPstmt(user.getPhoneNumber()));
-            stmt.setInt(++k, user.getAge());
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new UserCreateFailureException(String.format(UserWarnings.USER_CREATE_FAILURE, id));
-        } finally {
-            DbUtils.close(stmt);
-            DbUtils.close(con);
-        }
-
-    }
-
 
     private void isExist(long id) {
         if (getUserById(id) == null) {
