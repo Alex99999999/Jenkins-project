@@ -11,12 +11,10 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
-    private final Queries userQueries;
     private String sql;
 
-    public UserServiceImpl(UserDao userDao, Queries userQueries) {
+    public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
-        this.userQueries = userQueries;
     }
 
     @Override
@@ -31,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(long id) {
-        return null;
+        return userDao.getUserById(id);
     }
 
     @Override
@@ -41,8 +39,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(User user) {
-        sql = userQueries.getQuery(UserOperations.UPDATE_USER.getOperationName());
-        userDao.updateUser(user, sql);
+        userDao.updateUser(user);
     }
 
     @Override

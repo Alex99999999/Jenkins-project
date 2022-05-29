@@ -26,6 +26,9 @@ public class User implements Serializable {
     @DbName(name = UserParameters.AGE)
     private int age;
 
+    public User() {
+    }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -76,4 +79,5 @@ public class User implements Serializable {
                 ", age=" + age +
                 '}';
     }
+
 }
