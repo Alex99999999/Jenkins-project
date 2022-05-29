@@ -60,7 +60,24 @@ public class UserDaoImpl implements UserDao {
 
   @Override
   public User getUserByName(String name) {
-    return null;
+    Connection con = connectionProvider.getConnection();
+    User user;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    try {
+      String sql = queries.getQuery(UserOperations.GET_USER_BY_NAME.getOperationName());
+      pstmt = con.prepareStatement(sql);
+      pstmt.setString(50, name);
+      rs = pstmt.executeQuery();
+      user = new DbUserBuilder(rs).buildUserWithAllFields();
+    } catch (SQLException e) {
+      throw new UserRetrieveFailureException(String.format(UserWarnings.USER_RETRIEVE_FAILURE, name));
+    } finally{
+      DbUtils.close(rs);
+      DbUtils.close(pstmt);
+      DbUtils.close(con);
+    }
+    return user;
   }
 
   @Override

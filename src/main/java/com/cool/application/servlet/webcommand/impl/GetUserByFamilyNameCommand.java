@@ -25,7 +25,7 @@ public class GetUserByFamilyNameCommand implements Command {
     @Override
     public String execute(HttpServletRequest req) {
         AbstractUserBuilder builder = new HttpUserBuilder(req);
-        String name = req.getParameter("name");
+        String name = req.getParameter("family_name");
         User user = userService.getUserByName(name);
         req.setAttribute(GlobalAttributes.USER,user);
         return Pages.USER_DETAILS_PAGE;

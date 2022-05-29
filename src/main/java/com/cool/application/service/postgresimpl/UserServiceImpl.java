@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByName(String name) {
-        return null;
+        return userDao.getUserByName(name);
     }
 
     @Override
