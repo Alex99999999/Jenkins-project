@@ -17,8 +17,8 @@ public class PostgresApplicationContextImpl implements ApplicationContext {
 
     public PostgresApplicationContextImpl(DbConnectionProvider connectionProvider) {
         this.postgresUserQueries = new PostgresUserQueries();
-        this.userDao = new UserDaoImpl(connectionProvider);
-        this.userService = new UserServiceImpl(userDao, postgresUserQueries);
+        this.userDao = new UserDaoImpl(connectionProvider, postgresUserQueries);
+        this.userService = new UserServiceImpl(userDao);
     }
 
     public UserService getUserService() {
