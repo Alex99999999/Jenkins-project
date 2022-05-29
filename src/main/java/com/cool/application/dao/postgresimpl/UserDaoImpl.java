@@ -88,7 +88,6 @@ public class UserDaoImpl implements UserDao {
 
     }
 
-
     private void isExist(long id) {
         if (getUserById(id) == null) {
             throw new UserNotFoundException(String.format(UserWarnings.USER_NOT_FOUND, id));
