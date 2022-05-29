@@ -31,13 +31,8 @@ public class PostgresDbConnectionProviderImpl implements DbConnectionProvider {
     private void setupConnectionDetails() {
         try {
             Context initContext = new InitialContext();
-            //TODO Check DB connection settings
-            //Option 1
-            // https://tomcat.apache.org/tomcat-8.0-doc/jndi-datasource-examples-howto.html
             Context envContext = (Context) initContext.lookup("java:/comp/env");
-            dataSource = (DataSource) envContext.lookup("jdbc/our_cool_database");
-            //Option 2
-//            DataSource ds = (DataSource) cxt.lookup( "java:/comp/env/jdbc/our_cool_database" );
+            dataSource = (DataSource) envContext.lookup("jdbc/coolcatsDB");
         } catch (NamingException e) {
             throw new DbInitializationFailureException(DbWarnings.DATA_BASE_INIT_FAILED, e.getCause());
         }

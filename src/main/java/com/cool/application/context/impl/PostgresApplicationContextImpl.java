@@ -24,4 +24,5 @@ public class PostgresApplicationContextImpl implements ApplicationContext {
     public UserService getUserService() {
         return userService;
     }
+
 }

@@ -11,6 +11,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.sql.Connection;
+import java.sql.SQLException;
 
 @WebListener
 public class AppContextListener implements ServletContextListener {
@@ -18,7 +19,6 @@ public class AppContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext ctx = sce.getServletContext();
-        //TODO Establish db connection
         DbConnectionProvider dbConnectionProvider = new PostgresDbConnectionProviderImpl();
         Connection con = dbConnectionProvider.getConnection();
 
@@ -26,16 +26,19 @@ public class AppContextListener implements ServletContextListener {
         CommandContainer commandContainer = new CommandContainer(applicationContext);
         ctx.setAttribute(GlobalAttributes.DB_CONNECTION, con);
         ctx.setAttribute(GlobalAttributes.COMMAND_CONTAINER, commandContainer);
-
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
         ServletContext ctx = servletContextEvent.getServletContext();
         Connection con = (Connection) ctx.getAttribute(GlobalAttributes.DB_CONNECTION);
-
-        //TODO Close DB connection
-
+        if (con != null) {
+            try {
+                con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
