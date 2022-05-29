@@ -25,7 +25,6 @@ public class GetUserByIdCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
-        AbstractUserBuilder builder = new HttpUserBuilder(req);
         long id = Utils.parseLong(req.getParameter("id"));
         User user = userService.getUserById(id);
         req.setAttribute(GlobalAttributes.USER, user);

@@ -7,5 +7,7 @@ public class UserWarnings {
     public static final String USER_NOT_FOUND = "User not found. ID = %d";
     public static final String USER_UPDATE_FAILURE = "User update failed. ID = %d";
     public static final String USER_CREATE_FAILURE = "User create failed. ID = %d";
+    public static final String USER_RETRIEVE_FAILURE = "Failed to retrieve user from DB. ID = %d";
+
 }
 
