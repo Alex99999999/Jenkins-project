@@ -17,7 +17,6 @@ public class PostgresUserQueries implements Queries {
     private void populateQueries() {
         queries = new HashMap<>();
         queries.put(UserOperations.UPDATE_USER.getOperationName(), "UPDATE user SET family_name = ?,  given_name = ?, phone_number = ?, age = ? WHERE id = ?;");
-        queries.put(UserOperations.GET_USER_BY_ID.getOperationName(), "SELECT * from user WHERE id = ?");
     }
 
     public String getQuery(String key) {

@@ -14,5 +14,4 @@ public class DefaultCommand implements Command {
     public String execute(HttpServletRequest req) {
         return null;
     }
-
 }

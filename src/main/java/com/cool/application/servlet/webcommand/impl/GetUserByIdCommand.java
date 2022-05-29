@@ -1,13 +1,7 @@
 package com.cool.application.servlet.webcommand.impl;
 
-import com.cool.application.builder.userbuilder.AbstractUserBuilder;
-import com.cool.application.builder.userbuilder.HttpUserBuilder;
-import com.cool.application.entity.User;
 import com.cool.application.service.UserService;
-import com.cool.application.servlet.attributes.GlobalAttributes;
-import com.cool.application.servlet.pages.Pages;
 import com.cool.application.servlet.webcommand.Command;
-import com.cool.application.utils.Utils;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,11 +19,7 @@ public class GetUserByIdCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
-        AbstractUserBuilder builder = new HttpUserBuilder(req);
-        long id = Utils.parseLong(req.getParameter("id"));
-        User user = userService.getUserById(id);
-        req.setAttribute(GlobalAttributes.USER, user);
-        return Pages.USER_DETAILS_PAGE;
+        return null;
     }
 
 }

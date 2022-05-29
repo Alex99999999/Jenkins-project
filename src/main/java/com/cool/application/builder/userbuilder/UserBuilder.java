@@ -9,5 +9,4 @@ public class UserBuilder extends AbstractUserBuilder{
     public UserBuilder(User user) {
 
     }
-
 }
