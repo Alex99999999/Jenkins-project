@@ -19,93 +19,97 @@ import java.util.List;
 
 public class UserDaoImpl implements UserDao {
 
-  private final DbConnectionProvider connectionProvider;
-  private final Queries queries;
+    private final DbConnectionProvider connectionProvider;
+    private final Queries queries;
 
-  public UserDaoImpl(DbConnectionProvider connectionProvider, Queries queries) {
-    this.connectionProvider = connectionProvider;
-    this.queries = queries;
-  }
-
-  @Override
-  public List<User> findAllUsers() {
-    return null;
-  }
-
-  @Override
-  public void deleteUser() {}
-
-  @Override
-  public User getUserById(long id) {
-    Connection con = connectionProvider.getConnection();
-    User user;
-    PreparedStatement pstmt = null;
-    ResultSet rs = null;
-    isExist(id);
-    try {
-      String sql = queries.getQuery(UserOperations.GET_USER_BY_ID.getOperationName());
-      pstmt = con.prepareStatement(sql);
-      pstmt.setLong(1, id);
-      rs = pstmt.executeQuery();
-      user = new DbUserBuilder(rs).buildUserWithAllFields();
-    } catch (SQLException e) {
-      throw new UserRetrieveFailureException(String.format(UserWarnings.USER_RETRIEVE_FAILURE, id));
-    } finally {
-      DbUtils.close(rs);
-      DbUtils.close(pstmt);
-      DbUtils.close(con);
+    public UserDaoImpl(DbConnectionProvider connectionProvider, Queries queries) {
+        this.connectionProvider = connectionProvider;
+        this.queries = queries;
     }
-    return user;
-  }
 
-  @Override
-  public User getUserByName(String name) {
-    Connection con = connectionProvider.getConnection();
-    User user;
-    PreparedStatement pstmt = null;
-    ResultSet rs = null;
-    try {
-      String sql = queries.getQuery(UserOperations.GET_USER_BY_NAME.getOperationName());
-      pstmt = con.prepareStatement(sql);
-      pstmt.setString(50, name);
-      rs = pstmt.executeQuery();
-      user = new DbUserBuilder(rs).buildUserWithAllFields();
-    } catch (SQLException e) {
-      throw new UserRetrieveFailureException(String.format(UserWarnings.USER_RETRIEVE_FAILURE, name));
-    } finally{
-      DbUtils.close(rs);
-      DbUtils.close(pstmt);
-      DbUtils.close(con);
+    @Override
+    public List<User> findAllUsers() {
+        return null;
     }
-    return user;
-  }
 
-  @Override
-  public void updateUser(User user) {
-    Connection con = connectionProvider.getConnection();
-    PreparedStatement pstmt = null;
-    long id = user.getId();
-    isExist(id);
-    try {
-      String sql = queries.getQuery(UserOperations.UPDATE_USER.getOperationName());
-      pstmt = con.prepareStatement(sql);
-      int k = 0;
-      pstmt.setString(++k, DbUtils.escapeForPstmt(user.getFamilyName()));
-      pstmt.setString(++k, DbUtils.escapeForPstmt(user.getGivenName()));
-      pstmt.setString(++k, DbUtils.escapeForPstmt(user.getPhoneNumber()));
-      pstmt.setInt(++k, user.getAge());
-      pstmt.executeUpdate();
-    } catch (SQLException e) {
-      throw new UserUpdateFailureException(String.format(UserWarnings.USER_UPDATE_FAILURE, id));
-    } finally {
-      DbUtils.close(pstmt);
-      DbUtils.close(con);
+    @Override
+    public void deleteUser() {
     }
-  }
 
-  private void isExist(long id) {
-    if (getUserById(id) == null) {
-      throw new UserNotFoundException(String.format(UserWarnings.USER_NOT_FOUND, id));
+    @Override
+    public User getUserById(long id) {
+        Connection con = connectionProvider.getConnection();
+        User user;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        isExist(id);
+        try {
+            String sql = queries.getQuery(UserOperations.GET_USER_BY_ID.getOperationName());
+            pstmt = con.prepareStatement(sql);
+            pstmt.setLong(1, id);
+            rs = pstmt.executeQuery();
+            user = new DbUserBuilder(rs).buildUserWithAllFields();
+        } catch (SQLException e) {
+            throw new UserRetrieveFailureException(String.format(UserWarnings.USER_RETRIEVE_FAILURE, id));
+        } finally {
+            DbUtils.close(rs);
+            DbUtils.close(pstmt);
+            DbUtils.close(con);
+        }
+        return user;
     }
-  }
+
+    @Override
+    public User getUserByFamilyName(String name) {
+        Connection con = connectionProvider.getConnection();
+        User user;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            String sql = queries.getQuery(UserOperations.GET_USER_BY_NAME.getOperationName());
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, name);
+            rs = pstmt.executeQuery();
+            if (rs == null) {
+                throw new UserNotFoundException(String.format(UserWarnings.USER_BY_NAME_NOT_FOUND, name));
+            }
+            user = new DbUserBuilder(rs).buildUserWithAllFields();
+        } catch (SQLException e) {
+            throw new UserRetrieveFailureException(String.format(UserWarnings.USER_BY_NAME_NOT_FOUND, name));
+        } finally {
+            DbUtils.close(rs);
+            DbUtils.close(pstmt);
+            DbUtils.close(con);
+        }
+        return user;
+    }
+
+    @Override
+    public void updateUser(User user) {
+        Connection con = connectionProvider.getConnection();
+        PreparedStatement pstmt = null;
+        long id = user.getId();
+        isExist(id);
+        try {
+            String sql = queries.getQuery(UserOperations.UPDATE_USER.getOperationName());
+            pstmt = con.prepareStatement(sql);
+            int k = 0;
+            pstmt.setString(++k, DbUtils.escapeForPstmt(user.getFamilyName()));
+            pstmt.setString(++k, DbUtils.escapeForPstmt(user.getGivenName()));
+            pstmt.setString(++k, DbUtils.escapeForPstmt(user.getPhoneNumber()));
+            pstmt.setInt(++k, user.getAge());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new UserUpdateFailureException(String.format(UserWarnings.USER_UPDATE_FAILURE, id));
+        } finally {
+            DbUtils.close(pstmt);
+            DbUtils.close(con);
+        }
+    }
+
+    private void isExist(long id) {
+        if (getUserById(id) == null) {
+            throw new UserNotFoundException(String.format(UserWarnings.USER_NOT_FOUND, id));
+        }
+    }
 }
