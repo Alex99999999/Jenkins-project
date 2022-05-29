@@ -39,4 +39,10 @@ public class UserServiceImpl implements UserService {
         userDao.updateUser(user);
     }
 
+    @Override
+    public void createUser(User user) {
+        sql = userQueries.getQuery(UserOperations.CREATE_USER.getOperationName());
+        userDao.createUser(user, sql);
+    }
+
 }

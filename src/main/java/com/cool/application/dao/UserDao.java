@@ -16,4 +16,5 @@ public interface UserDao {
 
     void updateUser(User user);
 
+    void createUser(User user, String sql);
 }
