@@ -10,42 +10,41 @@ import java.util.List;
 
 public class UserServiceImpl implements UserService {
 
-    private final UserDao userDao;
-    private String sql;
+  private final UserDao userDao;
+  private String sql;
 
-    public UserServiceImpl(UserDao userDao) {
-        this.userDao = userDao;
-    }
+  public UserServiceImpl(UserDao userDao) {
+    this.userDao = userDao;
+  }
 
-    @Override
-    public List<User> findAllUsers() {
-        return null;
-    }
+  @Override
+  public List<User> findAllUsers() {
+    return null;
+  }
 
-    @Override
-    public void deleteUser() {
+  @Override
+  public void deleteUser() {
 
-    }
+  }
 
-    @Override
-    public User getUserById(long id) {
-        return userDao.getUserById(id);
-    }
+  @Override
+  public User getUserById(long id) {
+    return userDao.getUserById(id);
+  }
 
-    @Override
-    public User getUserByName(String name) {
-        return null;
-    }
+  @Override
+  public User getUserByName(String name) {
+    return null;
+  }
 
-    @Override
-    public void updateUser(User user) {
-        userDao.updateUser(user);
-    }
+  @Override
+  public void updateUser(User user) {
+    userDao.updateUser(user);
+  }
 
-    @Override
-    public void createUser(User user) {
-        sql = userQueries.getQuery(UserOperations.CREATE_USER.getOperationName());
-        userDao.createUser(user, sql);
-    }
+  @Override
+  public void createUser(User user) {
+    userDao.createUser(user);
+  }
 
 }

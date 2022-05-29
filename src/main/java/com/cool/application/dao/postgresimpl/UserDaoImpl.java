@@ -35,7 +35,8 @@ public class UserDaoImpl implements UserDao {
   }
 
   @Override
-  public void deleteUser() {}
+  public void deleteUser() {
+  }
 
   @Override
   public User getUserById(long id) {
@@ -87,28 +88,29 @@ public class UserDaoImpl implements UserDao {
       DbUtils.close(con);
     }
   }
-    @Override
-    public void createUser(User user, String sql) {
-        Connection con = connectionProvider.getConnection();
-        PreparedStatement stmt = null;
-        long id = user.getId();
-        try {
-            stmt = con.prepareStatement(sql);
-            int k = 0;
-            stmt.setLong(++k, user.getId());
-            stmt.setString(++k, DbUtils.escapeForPstmt(user.getFamilyName()));
-            stmt.setString(++k, DbUtils.escapeForPstmt(user.getGivenName()));
-            stmt.setString(++k, DbUtils.escapeForPstmt(user.getPhoneNumber()));
-            stmt.setInt(++k, user.getAge());
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            throw new UserCreateFailureException(String.format(UserWarnings.USER_CREATE_FAILURE, id));
-        } finally {
-            DbUtils.close(stmt);
-            DbUtils.close(con);
-        }
 
+  @Override
+  public void createUser(User user) {
+    Connection con = connectionProvider.getConnection();
+    PreparedStatement stmt = null;
+    long id = user.getId();
+    try {
+      String sql = queries.getQuery(UserOperations.CREATE_USER.getOperationName());
+      stmt = con.prepareStatement(sql);
+      int k = 0;
+      stmt.setString(++k, DbUtils.escapeForPstmt(user.getFamilyName()));
+      stmt.setString(++k, DbUtils.escapeForPstmt(user.getGivenName()));
+      stmt.setString(++k, DbUtils.escapeForPstmt(user.getPhoneNumber()));
+      stmt.setInt(++k, user.getAge());
+      stmt.executeQuery();
+    } catch (SQLException e) {
+      throw new UserCreateFailureException(String.format(UserWarnings.USER_CREATE_FAILURE, id));
+    } finally {
+      DbUtils.close(stmt);
+      DbUtils.close(con);
     }
+
+  }
 
   private void isExist(long id) {
     if (getUserById(id) == null) {

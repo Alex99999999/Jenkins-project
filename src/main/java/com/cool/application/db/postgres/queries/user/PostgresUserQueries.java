@@ -19,7 +19,7 @@ public class PostgresUserQueries implements Queries {
     queries.put(UserOperations.UPDATE_USER.getOperationName(),
         "UPDATE user SET family_name = ?,  given_name = ?, phone_number = ?, age = ? WHERE id = ?;");
     queries.put(UserOperations.CREATE_USER.getOperationName(),
-        "INSERT INTO user (id,family_name,given_name,phone_number, age) VALUES (?,?,?,?,?)");
+        "INSERT INTO user (family_name,given_name,phone_number, age) VALUES (?,?,?,?)");
     queries.put(UserOperations.GET_USER_BY_ID.getOperationName(), "SELECT * from user WHERE id = ?");
   }
 
