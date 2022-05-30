@@ -62,7 +62,7 @@ public class UserDaoImpl implements UserDao {
   }
 
   @Override
-  public User getUserByName(String name) {
+  public User getUserByFamilyName(String name) {
     return null;
   }
 
