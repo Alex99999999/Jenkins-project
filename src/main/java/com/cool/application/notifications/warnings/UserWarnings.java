@@ -8,9 +8,9 @@ public class UserWarnings {
     public static final String USER_UPDATE_FAILURE = "User update failed. ID = %d";
     public static final String USER_CREATE_FAILURE = "User create failed. ID = %d";
     public static final String USER_RETRIEVE_FAILURE = "Failed to retrieve user from DB. ID = %d";
+    public static final String USER_DELETE_FAILURE = "Failed to delete user. ID = %d";
     public static final String USER_BY_NAME_NOT_FOUND = "User not found. Name = %s";
     public static final String NULLABLE_RESULT_SET = "Result Set is Nullable.";
-
 
 }
 

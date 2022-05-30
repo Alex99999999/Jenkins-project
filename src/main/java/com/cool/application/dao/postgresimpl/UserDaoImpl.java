@@ -7,12 +7,9 @@ import com.cool.application.db.DbConnectionProvider;
 import com.cool.application.db.Queries;
 import com.cool.application.db.postgres.queries.user.PostgresUserQueries;
 import com.cool.application.entity.User;
+import com.cool.application.exception.user.*;
 import com.cool.application.exception.db.ResultSetFailureException;
 import com.cool.application.exception.user.UserCreateFailureException;
-import com.cool.application.exception.user.UserCreateFailureException;
-import com.cool.application.exception.user.UserNotFoundException;
-import com.cool.application.exception.user.UserRetrieveFailureException;
-import com.cool.application.exception.user.UserUpdateFailureException;
 import com.cool.application.notifications.warnings.UserWarnings;
 import com.cool.application.operations.UserOperations;
 import com.cool.application.utils.DbUtils;
@@ -59,7 +56,21 @@ public class UserDaoImpl implements UserDao {
   }
 
   @Override
-  public void deleteUser() {
+  public void deleteUser(long id) {
+    Connection con = connectionProvider.getConnection();
+    PreparedStatement pstmt = null;
+    isExist(id);
+    try {
+      String sql = queries.getQuery(UserOperations.DELETE_USER.getOperationName());
+      pstmt = con.prepareStatement(sql);
+      pstmt.setLong(1, id);
+      pstmt.executeUpdate();
+    } catch (SQLException e) {
+      throw new UserDeleteFailureException(String.format(UserWarnings.USER_DELETE_FAILURE, id));
+    } finally {
+      DbUtils.close(pstmt);
+      DbUtils.close(con);
+    }
   }
 
   @Override
