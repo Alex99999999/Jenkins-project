@@ -7,6 +7,7 @@ public enum UserOperations {
   DELETE_USER("delete_user"),
   GET_ALL_USERS("get_all_users");
 
+
   private final String query;
 
   UserOperations(String query) {

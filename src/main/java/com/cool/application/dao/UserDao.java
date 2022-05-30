@@ -12,7 +12,7 @@ public interface UserDao {
 
     User getUserById(long id);
 
-    User getUserByName(String name);
+    User getUserByFamilyName(String name);
 
     void updateUser(User user);
 
