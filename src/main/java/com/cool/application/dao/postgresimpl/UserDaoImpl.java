@@ -7,6 +7,7 @@ import com.cool.application.db.DbConnectionProvider;
 import com.cool.application.db.Queries;
 import com.cool.application.db.postgres.queries.user.PostgresUserQueries;
 import com.cool.application.entity.User;
+import com.cool.application.exception.db.ResultSetFailureException;
 import com.cool.application.exception.user.UserCreateFailureException;
 import com.cool.application.exception.user.UserCreateFailureException;
 import com.cool.application.exception.user.UserNotFoundException;
@@ -17,6 +18,7 @@ import com.cool.application.operations.UserOperations;
 import com.cool.application.utils.DbUtils;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoImpl implements UserDao {
@@ -31,7 +33,29 @@ public class UserDaoImpl implements UserDao {
 
   @Override
   public List<User> findAllUsers() {
-    return null;
+    Connection con = connectionProvider.getConnection();
+    List<User> users = new ArrayList<>();
+    Statement stmt = null;
+    ResultSet rs = null;
+    try {
+      String sql = queries.getQuery(UserOperations.GET_ALL_USERS.getOperationName());
+      stmt = con.createStatement();
+      rs = stmt.executeQuery(sql);
+      if (rs == null) {
+        throw new ResultSetFailureException(String.format(UserWarnings.NULLABLE_RESULT_SET));
+      }
+      while (rs.next()) {
+        User user = new DbUserBuilder(rs).buildUserWithAllFields();
+        users.add(user);
+      }
+    } catch (SQLException e) {
+      throw new ResultSetFailureException(String.format(UserWarnings.NULLABLE_RESULT_SET));
+    } finally {
+      DbUtils.close(rs);
+      DbUtils.close(stmt);
+      DbUtils.close(con);
+    }
+    return users;
   }
 
   @Override
@@ -62,8 +86,28 @@ public class UserDaoImpl implements UserDao {
   }
 
   @Override
-  public User getUserByName(String name) {
-    return null;
+  public User getUserByFamilyName(String name) {
+    Connection con = connectionProvider.getConnection();
+    User user;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    try {
+      String sql = queries.getQuery(UserOperations.GET_USER_BY_NAME.getOperationName());
+      pstmt = con.prepareStatement(sql);
+      pstmt.setString(1, name);
+      rs = pstmt.executeQuery();
+      if (rs == null) {
+        throw new UserNotFoundException(String.format(UserWarnings.USER_BY_NAME_NOT_FOUND, name));
+      }
+      user = new DbUserBuilder(rs).buildUserWithAllFields();
+    } catch (SQLException e) {
+      throw new UserRetrieveFailureException(String.format(UserWarnings.USER_BY_NAME_NOT_FOUND, name));
+    } finally {
+      DbUtils.close(rs);
+      DbUtils.close(pstmt);
+      DbUtils.close(con);
+    }
+    return user;
   }
 
   @Override

@@ -18,9 +18,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public List<User> findAllUsers() {
-    return null;
-  }
+  public List<User> findAllUsers() {return userDao.findAllUsers();}
 
   @Override
   public void deleteUser() {
@@ -33,8 +31,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User getUserByName(String name) {
-    return null;
+  public User getUserByFamilyName(String name) {
+    return userDao.getUserByFamilyName(name);
   }
 
   @Override
