@@ -2,10 +2,7 @@ package com.cool.application.servlet.webcommand;
 
 import com.cool.application.context.ApplicationContext;
 import com.cool.application.operations.UserOperations;
-import com.cool.application.servlet.webcommand.impl.CreateUserCommand;
-import com.cool.application.servlet.webcommand.impl.DefaultCommand;
-import com.cool.application.servlet.webcommand.impl.GetUserByIdCommand;
-import com.cool.application.servlet.webcommand.impl.UpdateUserCommand;
+import com.cool.application.servlet.webcommand.impl.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +26,9 @@ public class CommandContainer {
         commands.put(UserOperations.UPDATE_USER.getOperationName(), new UpdateUserCommand(applicationContext.getUserService()));
         commands.put(UserOperations.GET_USER_BY_ID.getOperationName(), new GetUserByIdCommand(applicationContext.getUserService()));
         commands.put(UserOperations.CREATE_USER.getOperationName(), new CreateUserCommand(applicationContext.getUserService()));
+        commands.put(UserOperations.DELETE_USER.getOperationName(), new DeleteUserCommand(applicationContext.getUserService()));
+        commands.put(UserOperations.GET_ALL_USERS.getOperationName(), new GetAllUsersCommand(applicationContext.getUserService()));
+
     }
 
 }

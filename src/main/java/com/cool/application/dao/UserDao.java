@@ -8,7 +8,7 @@ public interface UserDao {
 
     List<User> findAllUsers();
 
-    void deleteUser();
+    void deleteUser(long id);
 
     User getUserById(long id);
 

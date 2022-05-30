@@ -8,5 +8,6 @@ public final class GlobalAttributes {
     public static final String COMMAND_CONTAINER = "command_container";
     public static final String DB_CONNECTION = "db_connection";
     public static final String USER = "user";
+    public static final String MESSAGE = "message";
 
 }
