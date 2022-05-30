@@ -1,11 +1,9 @@
 package com.cool.application.dao.postgresimpl;
 
 import com.cool.application.builder.userbuilder.DbUserBuilder;
-import com.cool.application.builder.userbuilder.UserBuilder;
 import com.cool.application.dao.UserDao;
 import com.cool.application.db.DbConnectionProvider;
 import com.cool.application.db.Queries;
-import com.cool.application.db.postgres.queries.user.PostgresUserQueries;
 import com.cool.application.entity.User;
 import com.cool.application.exception.user.*;
 import com.cool.application.exception.db.ResultSetFailureException;
@@ -39,14 +37,14 @@ public class UserDaoImpl implements UserDao {
       stmt = con.createStatement();
       rs = stmt.executeQuery(sql);
       if (rs == null) {
-        throw new ResultSetFailureException(String.format(UserWarnings.NULLABLE_RESULT_SET));
+        throw new ResultSetFailureException(UserWarnings.NULLABLE_RESULT_SET);
       }
       while (rs.next()) {
         User user = new DbUserBuilder(rs).buildUserWithAllFields();
         users.add(user);
       }
     } catch (SQLException e) {
-      throw new ResultSetFailureException(String.format(UserWarnings.NULLABLE_RESULT_SET));
+      throw new ResultSetFailureException(UserWarnings.NULLABLE_RESULT_SET);
     } finally {
       DbUtils.close(rs);
       DbUtils.close(stmt);
@@ -172,4 +170,5 @@ public class UserDaoImpl implements UserDao {
       throw new UserNotFoundException(String.format(UserWarnings.USER_NOT_FOUND, id));
     }
   }
+
 }
