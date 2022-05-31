@@ -26,7 +26,7 @@ public class PostgresUserQueries implements Queries {
                 UserOperations.GET_USER_BY_ID.getOperationName(), "SELECT * from \"user\" WHERE id = ?");
         queries.put(
                 UserOperations.DELETE_USER.getOperationName(), "DELETE from \"user\" WHERE id = ?");
-        queries.put(UserOperations.GET_ALL_USERS.getOperationName(), "SELECT * from \"user\"");
+        queries.put(UserOperations.GET_ALL_USERS.getOperationName(), "SELECT * from \"user\";");
     }
 
     public String getQuery(String key) {
