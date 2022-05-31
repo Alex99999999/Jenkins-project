@@ -1,13 +1,9 @@
 package com.cool.application.servlet.webcommand.impl;
 
-import com.cool.application.builder.userbuilder.AbstractUserBuilder;
-import com.cool.application.builder.userbuilder.HttpUserBuilder;
-import com.cool.application.entity.User;
 import com.cool.application.notifications.warnings.messages.UserMessages;
 import com.cool.application.operations.UserOperations;
 import com.cool.application.service.UserService;
 import com.cool.application.servlet.attributes.GlobalAttributes;
-import com.cool.application.servlet.pages.Pages;
 import com.cool.application.servlet.webcommand.Command;
 import com.cool.application.utils.Utils;
 

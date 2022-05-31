@@ -1,6 +1,6 @@
 package com.cool.application.entity;
 
-import com.cool.application.annotation.DbName;
+import com.cool.application.annotation.Column;
 import com.cool.application.annotation.Nullable;
 import com.cool.application.servlet.parameters.UserParameters;
 
@@ -11,19 +11,19 @@ public class User implements Serializable {
     private long id;
 
     @Nullable
-    @DbName(name = UserParameters.FAMILY_NAME)
+    @Column(name = UserParameters.FAMILY_NAME)
     private String familyName;
 
     @Nullable(nullable = false)
-    @DbName(name = UserParameters.GIVEN_NAME)
+    @Column(name = UserParameters.GIVEN_NAME)
     private String givenName;
 
     @Nullable
-    @DbName(name = UserParameters.PHONE_NUMBER)
+    @Column(name = UserParameters.PHONE_NUMBER)
     private String phoneNumber;
 
     @Nullable
-    @DbName(name = UserParameters.AGE)
+    @Column(name = UserParameters.AGE)
     private int age;
 
     public User() {

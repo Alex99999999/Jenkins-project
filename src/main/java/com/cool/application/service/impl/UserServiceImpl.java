@@ -1,4 +1,4 @@
-package com.cool.application.service.postgresimpl;
+package com.cool.application.service.impl;
 
 import com.cool.application.dao.UserDao;
 import com.cool.application.entity.User;
@@ -9,7 +9,6 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
   private final UserDao userDao;
-  private String sql;
 
   public UserServiceImpl(UserDao userDao) {
     this.userDao = userDao;

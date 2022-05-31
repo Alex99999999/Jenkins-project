@@ -1,4 +1,4 @@
-package com.cool.application.dao.postgresimpl;
+package com.cool.application.dao.impl;
 
 import com.cool.application.builder.userbuilder.DbUserBuilder;
 import com.cool.application.dao.UserDao;
@@ -8,6 +8,7 @@ import com.cool.application.entity.User;
 import com.cool.application.exception.user.*;
 import com.cool.application.exception.db.ResultSetFailureException;
 import com.cool.application.exception.user.UserCreateFailureException;
+import com.cool.application.notifications.warnings.DbWarnings;
 import com.cool.application.notifications.warnings.UserWarnings;
 import com.cool.application.operations.UserOperations;
 import com.cool.application.utils.DbUtils;
@@ -37,14 +38,14 @@ public class UserDaoImpl implements UserDao {
       stmt = con.createStatement();
       rs = stmt.executeQuery(sql);
       if (rs == null) {
-        throw new ResultSetFailureException(UserWarnings.NULLABLE_RESULT_SET);
+        throw new ResultSetFailureException(DbWarnings.NULLABLE_RESULT_SET);
       }
       while (rs.next()) {
         User user = new DbUserBuilder(rs).buildUserWithAllFields();
         users.add(user);
       }
     } catch (SQLException e) {
-      throw new ResultSetFailureException(UserWarnings.NULLABLE_RESULT_SET);
+      throw new ResultSetFailureException(DbWarnings.NULLABLE_RESULT_SET);
     } finally {
       DbUtils.close(rs);
       DbUtils.close(stmt);
@@ -146,7 +147,6 @@ public class UserDaoImpl implements UserDao {
   public void createUser(User user) {
     Connection con = connectionProvider.getConnection();
     PreparedStatement stmt = null;
-    long id = user.getId();
     try {
       String sql = queries.getQuery(UserOperations.CREATE_USER.getOperationName());
       stmt = con.prepareStatement(sql);
@@ -157,12 +157,11 @@ public class UserDaoImpl implements UserDao {
       stmt.setInt(++k, user.getAge());
       stmt.executeQuery();
     } catch (SQLException e) {
-      throw new UserCreateFailureException(String.format(UserWarnings.USER_CREATE_FAILURE, id));
+      throw new UserCreateFailureException(String.format(UserWarnings.USER_CREATE_FAILURE));
     } finally {
       DbUtils.close(stmt);
       DbUtils.close(con);
     }
-
   }
 
   private void isExist(long id) {
