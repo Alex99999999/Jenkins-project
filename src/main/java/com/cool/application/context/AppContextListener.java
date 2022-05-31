@@ -10,7 +10,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-
+import java.sql.Connection;
+import java.sql.SQLException;
 
 @WebListener
 public class AppContextListener implements ServletContextListener {
@@ -20,8 +21,16 @@ public class AppContextListener implements ServletContextListener {
         ServletContext ctx = sce.getServletContext();
         DbConnectionProvider dbConnectionProvider = new PostgresDbConnectionProviderImpl2();
 
+//        Connection con = null;
+//        try {
+//            con = dbConnectionProvider.getConnection();
+//        } catch (SQLException e) {
+//            ctx.setAttribute(GlobalAttributes.MESSAGE, "AppContextListener Connection is null");
+//        }
+
         ApplicationContext applicationContext = new PostgresApplicationContextImpl(dbConnectionProvider);
         CommandContainer commandContainer = new CommandContainer(applicationContext);
+//        ctx.setAttribute(GlobalAttributes.DB_CONNECTION, con);
         ctx.setAttribute(GlobalAttributes.COMMAND_CONTAINER, commandContainer);
     }
 
