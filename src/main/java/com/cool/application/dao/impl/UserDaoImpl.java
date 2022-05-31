@@ -28,16 +28,17 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> findAllUsers() {
+        List<User> users = new ArrayList<>();
         Connection con;
         try {
             con = connectionProvider.getConnection();
         } catch (SQLException e) {
-            throw new DbException(DbWarnings.NULLABLE_RESULT_SET);
+//            throw new DbException(DbWarnings.NULLABLE_RESULT_SET);
+            return users;
         }
         if (con == null) {
             throw new DbException(DbWarnings.NULLABLE_RESULT_SET);
         }
-        List<User> users = new ArrayList<>();
         Statement stmt = null;
         ResultSet rs = null;
         try {
