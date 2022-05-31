@@ -20,7 +20,7 @@ public class GetAllUsersCommand implements Command {
     @Override
     public String execute(HttpServletRequest req) {
         List<User> users = userService.findAllUsers();
-        req.setAttribute(GlobalAttributes.USER_LIST, users);
+        req.getSession().setAttribute(GlobalAttributes.USER_LIST, users);
         return Pages.SHOW_ALL_USERS;
     }
 
