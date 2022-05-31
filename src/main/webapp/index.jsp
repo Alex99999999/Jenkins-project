@@ -16,8 +16,8 @@
         <div class="col-sm-4 center-block text-center">
             <div class="p-3">
                 <form action="users" method="get">
-                    <input type="hidden" name="command" value="show_all_users">
-                    <button type="submit" class="btn btn-primary btn-lg">"Show All Users"</button>
+                    <input type="hidden" name="command" value="get_all_users">
+                    <button type="submit" class="btn btn-primary btn-lg">Show All Users</button>
                 </form>
             </div>
         </div>
