@@ -28,6 +28,7 @@ public class UserController extends HttpServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     commandContainer = (CommandContainer)req.getServletContext().getAttribute(GlobalAttributes.COMMAND_CONTAINER);
+    System.out.println("Controller command container" + commandContainer);
     String address = Pages.ERROR_PAGE;
     try {
       command = commandContainer.getCommand(req.getParameter(GlobalParams.COMMAND));
