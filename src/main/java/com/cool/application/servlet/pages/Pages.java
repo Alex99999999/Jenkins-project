@@ -2,7 +2,7 @@ package com.cool.application.servlet.pages;
 
 public final class Pages {
 
-    public static final String PAGE_EXTENSION = ".html";
+    public static final String PAGE_EXTENSION = ".jsp";
 
     private Pages() {
     }
