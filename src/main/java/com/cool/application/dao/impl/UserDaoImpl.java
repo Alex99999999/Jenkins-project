@@ -34,11 +34,9 @@ public class UserDaoImpl implements UserDao {
         } catch (SQLException e) {
             throw new DbException(DbWarnings.NULLABLE_RESULT_SET);
         }
-
         if (con == null) {
             throw new DbException(DbWarnings.NULLABLE_RESULT_SET);
         }
-
         List<User> users = new ArrayList<>();
         Statement stmt = null;
         ResultSet rs = null;
