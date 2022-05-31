@@ -33,7 +33,7 @@ public class UserController extends HttpServlet {
       command = commandContainer.getCommand(req.getParameter(GlobalParams.COMMAND));
       address = command.execute(req);
     } catch (RuntimeException e) {
-      req.setAttribute(WarningAttributes.USER_EXCEPTION, e.getMessage());
+      req.getSession().setAttribute(WarningAttributes.USER_EXCEPTION, e.getMessage());
       req.getRequestDispatcher(address).forward(req, resp);
     }
     req.getRequestDispatcher(address).forward(req, resp);

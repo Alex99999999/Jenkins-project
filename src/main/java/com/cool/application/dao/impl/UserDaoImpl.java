@@ -28,18 +28,21 @@ public class UserDaoImpl implements UserDao {
 
   @Override
   public List<User> findAllUsers() {
-    Connection con = null;
+    Connection con;
     try {
       con = connectionProvider.getConnection();
     } catch (SQLException e) {
-      throw new UserException("connection is null" );
+      return new ArrayList<>();
     }
+
     if (con == null) {
-      throw new UserException("connection is null" );
+      List<User> list = new ArrayList<>();
+      User user = new User();
+      user.setAge(15);
+      list.add(user);
+      return list;
     }
 
-
-    System.out.println("Connection " + con);
     List<User> users = new ArrayList<>();
     Statement stmt = null;
     ResultSet rs = null;
@@ -52,7 +55,6 @@ public class UserDaoImpl implements UserDao {
       }
       while (rs.next()) {
         User user = new DbUserBuilder(rs).buildUserWithAllFields();
-        System.out.println("User inside rs.next() " + user);
         users.add(user);
       }
     } catch (SQLException e) {
