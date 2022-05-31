@@ -30,7 +30,11 @@ public class UserDaoImpl implements UserDao {
     public List<User> findAllUsers() {
         List<User> users = new ArrayList<>();
         Connection con;
-        con = connectionProvider.getConnection();
+        try {
+            con = connectionProvider.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         Statement stmt = null;
         ResultSet rs = null;
         try {
@@ -56,7 +60,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void deleteUser(long id) {
-        Connection con = connectionProvider.getConnection();
+        Connection con = null;
+        try {
+            con = connectionProvider.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         PreparedStatement pstmt = null;
         isExist(id);
         try {
@@ -74,7 +83,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserById(long id) {
-        Connection con = connectionProvider.getConnection();
+        Connection con = null;
+        try {
+            con = connectionProvider.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         User user;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -97,7 +111,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserByFamilyName(String name) {
-        Connection con = connectionProvider.getConnection();
+        Connection con = null;
+        try {
+            con = connectionProvider.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         User user;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -122,7 +141,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void updateUser(User user) {
-        Connection con = connectionProvider.getConnection();
+        Connection con = null;
+        try {
+            con = connectionProvider.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         PreparedStatement pstmt = null;
         long id = user.getId();
         isExist(id);
@@ -145,7 +169,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void createUser(User user) {
-        Connection con = connectionProvider.getConnection();
+        Connection con = null;
+        try {
+            con = connectionProvider.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         PreparedStatement stmt = null;
         try {
             String sql = queries.getQuery(UserOperations.CREATE_USER.getOperationName());
