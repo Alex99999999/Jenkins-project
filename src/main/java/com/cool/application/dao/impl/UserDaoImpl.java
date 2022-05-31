@@ -45,22 +45,25 @@ public class UserDaoImpl implements UserDao {
     try {
       String sql = queries.getQuery(UserOperations.GET_ALL_USERS.getOperationName());
       stmt = con.createStatement();
-      rs = stmt.executeQuery(sql);
-      if (rs == null) {
-        throw new DbException(DbWarnings.NULLABLE_RESULT_SET);
-      }
-      while (rs.next()) {
-        User user = new DbUserBuilder(rs).buildUserWithAllFields();
-        users.add(user);
-      }
+      return users;
+
+//      rs = stmt.executeQuery(sql);
+//      if (rs == null) {
+//        throw new DbException(DbWarnings.NULLABLE_RESULT_SET);
+//      }
+//      while (rs.next()) {
+//        User user = new DbUserBuilder(rs).buildUserWithAllFields();
+//        users.add(user);
+//      }
     } catch (SQLException e) {
       throw new DbException(DbWarnings.NULLABLE_RESULT_SET);
-    } finally {
-      DbUtils.close(rs);
-      DbUtils.close(stmt);
-      DbUtils.close(con);
     }
-    return users;
+//    finally {
+//      DbUtils.close(rs);
+//      DbUtils.close(stmt);
+//      DbUtils.close(con);
+//    }
+//    return users;
   }
 
   @Override
