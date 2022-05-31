@@ -32,7 +32,11 @@ public class UserDaoImpl implements UserDao {
     try {
       con = connectionProvider.getConnection();
     } catch (SQLException e) {
-      return new ArrayList<>();
+      List<User> list = new ArrayList<>();
+      User user = new User();
+      user.setAge(0);
+      list.add(user);
+      return list;
     }
 
     if (con == null) {
