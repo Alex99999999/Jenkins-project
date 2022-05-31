@@ -8,7 +8,7 @@
     </head>
 
     <body>
-        <h2> Attempt 15 </h2>
+        <h2> Attempt 16 </h2>
 
         <div class="col-sm-4 center-block text-center">
             <div class="p-3">
@@ -18,23 +18,6 @@
                 </form>
             </div>
         </div>
-
-
-<h3>user/page name</h3>
-        <a href="user/show_all_users">get all users</a>
-        <hr>
-        <a href="user/show_user_details">show user details</a>
-             <hr>
-        <a href="user/error">error</a>
-             <hr>
-
-<h3>page name</h3>
-        <a href="show_all_users">get all users</a>
-          <hr>
-        <a href="show_user_details">show user details</a>
-               <hr>
-        <a href="error">error</a>
-               <hr>
 
 
 <h3>page name.jsp</h3>
