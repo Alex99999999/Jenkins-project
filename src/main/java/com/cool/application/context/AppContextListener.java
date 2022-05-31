@@ -35,17 +35,17 @@ public class AppContextListener implements ServletContextListener {
         ctx.setAttribute(GlobalAttributes.COMMAND_CONTAINER, commandContainer);
     }
 
-    @Override
-    public void contextDestroyed(ServletContextEvent servletContextEvent) {
-        ServletContext ctx = servletContextEvent.getServletContext();
-        Connection con = (Connection) ctx.getAttribute(GlobalAttributes.DB_CONNECTION);
-        if (con != null) {
-            try {
-                con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    @Override
+//    public void contextDestroyed(ServletContextEvent servletContextEvent) {
+//        ServletContext ctx = servletContextEvent.getServletContext();
+//        Connection con = (Connection) ctx.getAttribute(GlobalAttributes.DB_CONNECTION);
+//        if (con != null) {
+//            try {
+//                con.close();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
 }

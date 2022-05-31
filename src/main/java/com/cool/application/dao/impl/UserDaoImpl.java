@@ -18,78 +18,75 @@ import java.util.List;
 
 public class UserDaoImpl implements UserDao {
 
-  private final DbConnectionProvider connectionProvider;
-  private final Queries queries;
+    private final DbConnectionProvider connectionProvider;
+    private final Queries queries;
 
-  public UserDaoImpl(DbConnectionProvider connectionProvider, Queries queries) {
-    this.connectionProvider = connectionProvider;
-    this.queries = queries;
-  }
-
-  @Override
-  public List<User> findAllUsers() {
-    Connection con;
-    try {
-      con = connectionProvider.getConnection();
-    } catch (SQLException e) {
-      throw new DbException(DbWarnings.NULLABLE_RESULT_SET);
+    public UserDaoImpl(DbConnectionProvider connectionProvider, Queries queries) {
+        this.connectionProvider = connectionProvider;
+        this.queries = queries;
     }
 
-    if (con == null) {
-      throw new DbException(DbWarnings.NULLABLE_RESULT_SET);
+    @Override
+    public List<User> findAllUsers() {
+        Connection con;
+        try {
+            con = connectionProvider.getConnection();
+        } catch (SQLException e) {
+            throw new DbException(DbWarnings.NULLABLE_RESULT_SET);
+        }
+
+        if (con == null) {
+            throw new DbException(DbWarnings.NULLABLE_RESULT_SET);
+        }
+
+        List<User> users = new ArrayList<>();
+        Statement stmt = null;
+        ResultSet rs = null;
+        try {
+            String sql = queries.getQuery(UserOperations.GET_ALL_USERS.getOperationName());
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(sql);
+            if (rs == null) {
+                throw new DbException(DbWarnings.NULLABLE_RESULT_SET);
+            }
+            while (rs.next()) {
+                User user = new DbUserBuilder(rs).buildUserWithAllFields();
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            throw new DbException(DbWarnings.NULLABLE_RESULT_SET);
+        } finally {
+            DbUtils.close(rs);
+            DbUtils.close(stmt);
+            DbUtils.close(con);
+        }
+        return users;
     }
 
-    List<User> users = new ArrayList<>();
-    Statement stmt = null;
-    ResultSet rs = null;
-    try {
-      String sql = queries.getQuery(UserOperations.GET_ALL_USERS.getOperationName());
-      stmt = con.createStatement();
-      return users;
+    @Override
+    public void deleteUser(long id) {
 
-//      rs = stmt.executeQuery(sql);
-//      if (rs == null) {
-//        throw new DbException(DbWarnings.NULLABLE_RESULT_SET);
-//      }
-//      while (rs.next()) {
-//        User user = new DbUserBuilder(rs).buildUserWithAllFields();
-//        users.add(user);
-//      }
-    } catch (SQLException e) {
-      throw new DbException(DbWarnings.NULLABLE_RESULT_SET);
     }
-//    finally {
-//      DbUtils.close(rs);
-//      DbUtils.close(stmt);
-//      DbUtils.close(con);
-//    }
-//    return users;
-  }
 
-  @Override
-  public void deleteUser(long id) {
+    @Override
+    public User getUserById(long id) {
+        return null;
+    }
 
-  }
+    @Override
+    public User getUserByFamilyName(String name) {
+        return null;
+    }
 
-  @Override
-  public User getUserById(long id) {
-    return null;
-  }
+    @Override
+    public void updateUser(User user) {
 
-  @Override
-  public User getUserByFamilyName(String name) {
-    return null;
-  }
+    }
 
-  @Override
-  public void updateUser(User user) {
+    @Override
+    public void createUser(User user) {
 
-  }
-
-  @Override
-  public void createUser(User user) {
-
-  }
+    }
 
 //  @Override
 //  public void deleteUser(long id) {
@@ -201,10 +198,10 @@ public class UserDaoImpl implements UserDao {
 //    }
 //  }
 
-  private void isExist(long id) {
-    if (getUserById(id) == null) {
-      throw new UserException(String.format(UserWarnings.USER_NOT_FOUND, id));
+    private void isExist(long id) {
+        if (getUserById(id) == null) {
+            throw new UserException(String.format(UserWarnings.USER_NOT_FOUND, id));
+        }
     }
-  }
 
 }
