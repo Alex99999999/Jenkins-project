@@ -8,13 +8,11 @@ import java.sql.SQLException;
 public class PostgresDbConnectionProviderImpl2 implements DbConnectionProvider {
 
     @Override
-    public Connection getConnection() {
+    public Connection getConnection() throws SQLException {
         Connection connection = null;
-        try {
+
             connection = DriverManager.getConnection("jdbc:postgresql://192.168.1.193:5432/coolcatsDB", "postgres", "postgres");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
 
 //            System.out.println("Java JDBC PostgreSQL Example");
             // When this class first attempts to establish a connection, it automatically loads any JDBC 4.0 drivers found within
