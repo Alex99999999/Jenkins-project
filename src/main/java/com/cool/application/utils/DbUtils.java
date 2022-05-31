@@ -1,6 +1,7 @@
 package com.cool.application.utils;
 
-import com.cool.application.exception.db.ResourceClosingFailureException;
+import com.cool.application.exception.db.DbException;
+
 import com.cool.application.notifications.warnings.DbWarnings;
 
 public class DbUtils {
@@ -10,7 +11,7 @@ public class DbUtils {
             try {
                 ac.close();
             } catch (Exception e) {
-                throw new ResourceClosingFailureException(String.format(DbWarnings.FAILED_TO_CLOSE_RESOURCE, ac.getClass()));
+                throw new DbException(String.format(DbWarnings.FAILED_TO_CLOSE_RESOURCE, ac.getClass()));
             }
         }
     }

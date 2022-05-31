@@ -5,9 +5,8 @@ import com.cool.application.dao.UserDao;
 import com.cool.application.db.DbConnectionProvider;
 import com.cool.application.db.Queries;
 import com.cool.application.entity.User;
+import com.cool.application.exception.db.DbException;
 import com.cool.application.exception.user.*;
-import com.cool.application.exception.db.ResultSetFailureException;
-import com.cool.application.exception.user.UserCreateFailureException;
 import com.cool.application.notifications.warnings.DbWarnings;
 import com.cool.application.notifications.warnings.UserWarnings;
 import com.cool.application.operations.UserOperations;
@@ -40,7 +39,7 @@ public class UserDaoImpl implements UserDao {
       rs = stmt.executeQuery(sql);
       System.out.println("ResultSet fetchsize" + rs.getFetchSize());
       if (rs == null) {
-        throw new ResultSetFailureException(DbWarnings.NULLABLE_RESULT_SET);
+        throw new DbException(DbWarnings.NULLABLE_RESULT_SET);
       }
       while (rs.next()) {
         User user = new DbUserBuilder(rs).buildUserWithAllFields();
@@ -48,7 +47,7 @@ public class UserDaoImpl implements UserDao {
         users.add(user);
       }
     } catch (SQLException e) {
-      throw new ResultSetFailureException(DbWarnings.NULLABLE_RESULT_SET);
+      throw new DbException(DbWarnings.NULLABLE_RESULT_SET);
     } finally {
       DbUtils.close(rs);
       DbUtils.close(stmt);
@@ -68,7 +67,7 @@ public class UserDaoImpl implements UserDao {
       pstmt.setLong(1, id);
       pstmt.executeUpdate();
     } catch (SQLException e) {
-      throw new UserDeleteFailureException(String.format(UserWarnings.USER_DELETE_FAILURE, id));
+      throw new UserException(String.format(UserWarnings.USER_DELETE_FAILURE, id));
     } finally {
       DbUtils.close(pstmt);
       DbUtils.close(con);
@@ -89,7 +88,7 @@ public class UserDaoImpl implements UserDao {
       rs = pstmt.executeQuery();
       user = new DbUserBuilder(rs).buildUserWithAllFields();
     } catch (SQLException e) {
-      throw new UserRetrieveFailureException(String.format(UserWarnings.USER_RETRIEVE_FAILURE, id));
+      throw new UserException(String.format(UserWarnings.USER_RETRIEVE_FAILURE, id));
     } finally {
       DbUtils.close(rs);
       DbUtils.close(pstmt);
@@ -110,11 +109,11 @@ public class UserDaoImpl implements UserDao {
       pstmt.setString(1, name);
       rs = pstmt.executeQuery();
       if (rs == null) {
-        throw new UserNotFoundException(String.format(UserWarnings.USER_BY_NAME_NOT_FOUND, name));
+        throw new UserException(String.format(UserWarnings.USER_BY_NAME_NOT_FOUND, name));
       }
       user = new DbUserBuilder(rs).buildUserWithAllFields();
     } catch (SQLException e) {
-      throw new UserRetrieveFailureException(String.format(UserWarnings.USER_BY_NAME_NOT_FOUND, name));
+      throw new UserException(String.format(UserWarnings.USER_BY_NAME_NOT_FOUND, name));
     } finally {
       DbUtils.close(rs);
       DbUtils.close(pstmt);
@@ -139,7 +138,7 @@ public class UserDaoImpl implements UserDao {
       pstmt.setInt(++k, user.getAge());
       pstmt.executeUpdate();
     } catch (SQLException e) {
-      throw new UserUpdateFailureException(String.format(UserWarnings.USER_UPDATE_FAILURE, id));
+      throw new UserException(String.format(UserWarnings.USER_UPDATE_FAILURE, id));
     } finally {
       DbUtils.close(pstmt);
       DbUtils.close(con);
@@ -160,7 +159,7 @@ public class UserDaoImpl implements UserDao {
       stmt.setInt(++k, user.getAge());
       stmt.executeQuery();
     } catch (SQLException e) {
-      throw new UserCreateFailureException(String.format(UserWarnings.USER_CREATE_FAILURE));
+      throw new UserException(String.format(UserWarnings.USER_CREATE_FAILURE));
     } finally {
       DbUtils.close(stmt);
       DbUtils.close(con);
@@ -169,7 +168,7 @@ public class UserDaoImpl implements UserDao {
 
   private void isExist(long id) {
     if (getUserById(id) == null) {
-      throw new UserNotFoundException(String.format(UserWarnings.USER_NOT_FOUND, id));
+      throw new UserException(String.format(UserWarnings.USER_NOT_FOUND, id));
     }
   }
 
