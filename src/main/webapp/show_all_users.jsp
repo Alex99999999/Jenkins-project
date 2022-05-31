@@ -20,7 +20,7 @@
                   <div class="container-fluid">
                       <div class="col-4">
                             <form action="user" method = "get" class="d-flex">
-                                <input type="hidden" name="command" value="find_user_by_family_name">
+                                <input type="hidden" name="command" value="get_user_by_name">
                                 <div class="col-8">
                                    <input class="form-control me-2" type="text" placeholder="Enter family name" name="family_name">
                                 </div>
