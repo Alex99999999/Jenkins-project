@@ -28,6 +28,15 @@ public class UserController extends HttpServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     commandContainer = (CommandContainer)req.getServletContext().getAttribute(GlobalAttributes.COMMAND_CONTAINER);
+    if (commandContainer == null) {
+      req.setAttribute(WarningAttributes.USER_EXCEPTION, "CommandContainer is null");
+      req.getRequestDispatcher(Pages.ERROR_PAGE).forward(req, resp);
+    } else {
+      req.setAttribute(WarningAttributes.USER_EXCEPTION, "CommandContainer is NOT null");
+      req.getRequestDispatcher(Pages.SHOW_ALL_USERS).forward(req, resp);
+    }
+
+
     System.out.println("Controller command container" + commandContainer);
     String address = Pages.ERROR_PAGE;
     try {

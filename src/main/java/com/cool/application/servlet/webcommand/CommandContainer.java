@@ -30,7 +30,6 @@ public class CommandContainer {
         commands.put(UserOperations.GET_ALL_USERS.getOperationName(), new GetAllUsersCommand((applicationContext.getUserService())));
         commands.put(UserOperations.GET_USER_BY_NAME.getOperationName(), new GetUserByFamilyNameCommand((applicationContext.getUserService())));
         commands.put(UserOperations.DELETE_USER.getOperationName(), new DeleteUserCommand(applicationContext.getUserService()));
-
     }
 
 }

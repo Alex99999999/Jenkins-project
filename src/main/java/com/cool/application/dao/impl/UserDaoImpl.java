@@ -28,7 +28,13 @@ public class UserDaoImpl implements UserDao {
 
   @Override
   public List<User> findAllUsers() {
-    Connection con = connectionProvider.getConnection();
+    Connection con = null;
+    con = connectionProvider.getConnection();
+    if (con == null) {
+      throw new UserException("connection is null" );
+    }
+
+
     System.out.println("Connection " + con);
     List<User> users = new ArrayList<>();
     Statement stmt = null;
@@ -37,7 +43,6 @@ public class UserDaoImpl implements UserDao {
       String sql = queries.getQuery(UserOperations.GET_ALL_USERS.getOperationName());
       stmt = con.createStatement();
       rs = stmt.executeQuery(sql);
-      System.out.println("ResultSet fetchsize" + rs.getFetchSize());
       if (rs == null) {
         throw new DbException(DbWarnings.NULLABLE_RESULT_SET);
       }

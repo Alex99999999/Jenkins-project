@@ -19,19 +19,14 @@ public class AppContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext ctx = sce.getServletContext();
-
-        System.out.println("Weblistener ServletContext "  + ctx);
-        ctx.setAttribute(GlobalAttributes.MESSAGE, "Weblistener ServletContext "  + ctx);
-
-
         DbConnectionProvider dbConnectionProvider = new PostgresDbConnectionProviderImpl2();
         System.out.println("Weblistener DbConnectionProvider" + dbConnectionProvider);
         Connection con = null;
         try {
             con = dbConnectionProvider.getConnection();
             con.createStatement();
-        } catch (SQLException e) {
-            ctx.setAttribute(GlobalAttributes.MESSAGE, "Connection is null");
+        } catch (SQLException | NullPointerException e) {
+            ctx.setAttribute(GlobalAttributes.MESSAGE, "AppContextListener Connection is null");
         }
 
         ApplicationContext applicationContext = new PostgresApplicationContextImpl(dbConnectionProvider);

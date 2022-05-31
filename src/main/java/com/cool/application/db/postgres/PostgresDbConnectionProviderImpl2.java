@@ -1,6 +1,8 @@
 package com.cool.application.db.postgres;
 
 import com.cool.application.db.DbConnectionProvider;
+import com.cool.application.exception.user.UserException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -8,10 +10,14 @@ import java.sql.SQLException;
 public class PostgresDbConnectionProviderImpl2 implements DbConnectionProvider {
 
     @Override
-    public Connection getConnection() throws SQLException {
+    public Connection getConnection()  {
         Connection connection = null;
 
+        try {
             connection = DriverManager.getConnection("jdbc:postgresql://192.168.1.193:5432/coolcatsDB", "postgres", "postgres");
+        } catch (SQLException e) {
+            throw new UserException("Connection is null");
+        }
 
 
 //            System.out.println("Java JDBC PostgreSQL Example");
