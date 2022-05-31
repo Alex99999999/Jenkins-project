@@ -30,6 +30,7 @@ public class UserDaoImpl implements UserDao {
   @Override
   public List<User> findAllUsers() {
     Connection con = connectionProvider.getConnection();
+    System.out.println("Connection " + con);
     List<User> users = new ArrayList<>();
     Statement stmt = null;
     ResultSet rs = null;
@@ -37,11 +38,13 @@ public class UserDaoImpl implements UserDao {
       String sql = queries.getQuery(UserOperations.GET_ALL_USERS.getOperationName());
       stmt = con.createStatement();
       rs = stmt.executeQuery(sql);
+      System.out.println("ResultSet fetchsize" + rs.getFetchSize());
       if (rs == null) {
         throw new ResultSetFailureException(DbWarnings.NULLABLE_RESULT_SET);
       }
       while (rs.next()) {
         User user = new DbUserBuilder(rs).buildUserWithAllFields();
+        System.out.println("User inside rs.next() " + user);
         users.add(user);
       }
     } catch (SQLException e) {

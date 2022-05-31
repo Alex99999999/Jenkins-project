@@ -18,6 +18,7 @@ public class CommandContainer {
     }
 
     public Command getCommand(String command) {
+        System.out.println("Command param " + command);
         return commands.getOrDefault(command, new DefaultCommand());
     }
 

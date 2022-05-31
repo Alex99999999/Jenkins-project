@@ -30,7 +30,8 @@ public class UserController extends HttpServlet {
     commandContainer = (CommandContainer)req.getServletContext().getAttribute(GlobalAttributes.COMMAND_CONTAINER);
     String address = Pages.ERROR_PAGE;
     try {
-      command = commandContainer.getCommand((String)req.getAttribute(GlobalParams.COMMAND));
+      command = commandContainer.getCommand(req.getParameter(GlobalParams.COMMAND));
+      System.out.println("User command " + command);
       address = command.execute(req);
     } catch (RuntimeException e) {
       req.setAttribute(WarningAttributes.USER_EXCEPTION, e.getMessage());
