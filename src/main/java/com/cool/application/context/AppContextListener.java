@@ -20,7 +20,7 @@ public class AppContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext ctx = sce.getServletContext();
         DbConnectionProvider dbConnectionProvider = new PostgresDbConnectionProviderImpl2();
-        System.out.println("Weblistener DbConnectionProvider" + dbConnectionProvider);
+
         Connection con = null;
         try {
             con = dbConnectionProvider.getConnection();

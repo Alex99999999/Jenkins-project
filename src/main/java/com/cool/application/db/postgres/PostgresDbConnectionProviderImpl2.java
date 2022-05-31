@@ -1,7 +1,6 @@
 package com.cool.application.db.postgres;
 
 import com.cool.application.db.DbConnectionProvider;
-import com.cool.application.exception.user.UserException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,19 +9,15 @@ import java.sql.SQLException;
 public class PostgresDbConnectionProviderImpl2 implements DbConnectionProvider {
 
     @Override
-    public Connection getConnection()  {
+    public Connection getConnection() throws SQLException {
         Connection connection = null;
 
-        try {
-            connection = DriverManager.getConnection("jdbc:postgresql://192.168.1.193:5432/coolcatsDB", "postgres", "postgres");
-        } catch (SQLException e) {
-            throw new UserException("Connection is null");
-        }
+        connection = DriverManager.getConnection("jdbc:postgresql://192.168.1.193:5432/coolcatsDB", "postgres", "postgres");
 
 
 //            System.out.println("Java JDBC PostgreSQL Example");
-            // When this class first attempts to establish a connection, it automatically loads any JDBC 4.0 drivers found within
-            // the class path. Note that your application must manually load any JDBC drivers prior to version 4.0.
+        // When this class first attempts to establish a connection, it automatically loads any JDBC 4.0 drivers found within
+        // the class path. Note that your application must manually load any JDBC drivers prior to version 4.0.
 //          Class.forName("org.postgresql.Driver");
 
 
