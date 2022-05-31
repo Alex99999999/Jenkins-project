@@ -29,7 +29,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> findAllUsers() {
         List<User> users = new ArrayList<>();
-        Connection con;
+        Connection con = null;
         try {
             con = connectionProvider.getConnection();
         } catch (SQLException e) {
