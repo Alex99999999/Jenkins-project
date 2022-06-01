@@ -32,6 +32,9 @@ public class UserController extends HttpServlet {
     try {
       command = commandContainer.getCommand(req.getParameter(GlobalParams.COMMAND));
       address = command.execute(req);
+      System.out.println("======================Get Controller");
+      System.out.println("Request attribute -> user List" + req.getAttribute("user_list"));
+      System.out.println("Request attribute -> user " + req.getAttribute("user"));
     } catch (RuntimeException e) {
       req.getSession().setAttribute(WarningAttributes.USER_EXCEPTION, e.getMessage());
       req.getRequestDispatcher(address).forward(req, resp);
@@ -46,8 +49,12 @@ public class UserController extends HttpServlet {
     try {
       command = commandContainer.getCommand(req.getParameter(GlobalParams.COMMAND));
       address = command.execute(req);
+      System.out.println("======================Post Controller");
+      System.out.println("Request attribute -> user List" + req.getAttribute("user_list"));
+      System.out.println("Request attribute -> user " + req.getAttribute("user"));
     } catch (RuntimeException e) {
       req.getSession().setAttribute(WarningAttributes.USER_EXCEPTION, e.getMessage());
+      resp.sendRedirect(address);
     }
     resp.sendRedirect(address);
   }

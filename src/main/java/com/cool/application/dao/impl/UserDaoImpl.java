@@ -29,16 +29,11 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> findAllUsers() {
         List<User> users = new ArrayList<>();
-        Connection con = null;
-        try {
-            con = connectionProvider.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Connection con = connectionProvider.getConnection();
         Statement stmt = null;
         ResultSet rs = null;
         try {
-            String sql = queries.getQuery(UserOperations.GET_ALL_USERS.getOperationName());
+            String sql = queries.getQuery(UserOperations.GET_ALL_USERS.getName());
             stmt = con.createStatement();
             rs = stmt.executeQuery(sql);
             if (rs == null) {
@@ -60,16 +55,11 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void deleteUser(long id) {
-        Connection con = null;
-        try {
-            con = connectionProvider.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Connection con = connectionProvider.getConnection();
         PreparedStatement pstmt = null;
         isExist(id);
         try {
-            String sql = queries.getQuery(UserOperations.DELETE_USER.getOperationName());
+            String sql = queries.getQuery(UserOperations.DELETE_USER.getName());
             pstmt = con.prepareStatement(sql);
             pstmt.setLong(1, id);
             pstmt.executeUpdate();
@@ -83,22 +73,21 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserById(long id) {
-        Connection con = null;
-        try {
-            con = connectionProvider.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        User user;
+        Connection con = connectionProvider.getConnection();
+        User user = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        isExist(id);
         try {
-            String sql = queries.getQuery(UserOperations.GET_USER_BY_ID.getOperationName());
+            String sql = queries.getQuery(UserOperations.GET_USER_BY_ID.getName());
             pstmt = con.prepareStatement(sql);
             pstmt.setLong(1, id);
             rs = pstmt.executeQuery();
-            user = new DbUserBuilder(rs).buildUserWithAllFields();
+            if (rs == null) {
+                throw new UserException(UserWarnings.NOTHING_FOUND_PER_YOUR_REQUEST);
+            }
+            if (rs.next()){
+                user = new DbUserBuilder(rs).buildUserWithAllFields();
+            }
         } catch (SQLException e) {
             throw new UserException(String.format(UserWarnings.USER_RETRIEVE_FAILURE, id));
         } finally {
@@ -110,25 +99,23 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getUserByFamilyName(String name) {
-        Connection con = null;
-        try {
-            con = connectionProvider.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        User user;
+    public List<User> getUserByFamilyName(String name) {
+        List<User> users = new ArrayList<>();
+        Connection con = connectionProvider.getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            String sql = queries.getQuery(UserOperations.GET_USER_BY_NAME.getOperationName());
+            String sql = queries.getQuery(UserOperations.GET_USER_BY_FAMILY_NAME.getName());
             pstmt = con.prepareStatement(sql);
             pstmt.setString(1, name);
             rs = pstmt.executeQuery();
             if (rs == null) {
                 throw new UserException(String.format(UserWarnings.USER_BY_NAME_NOT_FOUND, name));
             }
-            user = new DbUserBuilder(rs).buildUserWithAllFields();
+            while (rs.next()){
+                User user = new DbUserBuilder(rs).buildUserWithAllFields();
+                users.add(user);
+            }
         } catch (SQLException e) {
             throw new UserException(String.format(UserWarnings.USER_BY_NAME_NOT_FOUND, name));
         } finally {
@@ -136,28 +123,24 @@ public class UserDaoImpl implements UserDao {
             DbUtils.close(pstmt);
             DbUtils.close(con);
         }
-        return user;
+        return users;
     }
 
     @Override
     public void updateUser(User user) {
-        Connection con = null;
-        try {
-            con = connectionProvider.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Connection con = connectionProvider.getConnection();
         PreparedStatement pstmt = null;
         long id = user.getId();
         isExist(id);
         try {
-            String sql = queries.getQuery(UserOperations.UPDATE_USER.getOperationName());
+            String sql = queries.getQuery(UserOperations.UPDATE_USER.getName());
             pstmt = con.prepareStatement(sql);
             int k = 0;
-            pstmt.setString(++k, DbUtils.escapeForPstmt(user.getFamilyName()));
-            pstmt.setString(++k, DbUtils.escapeForPstmt(user.getGivenName()));
-            pstmt.setString(++k, DbUtils.escapeForPstmt(user.getPhoneNumber()));
+            pstmt.setString(++k, user.getFamilyName());
+            pstmt.setString(++k, user.getGivenName());
+            pstmt.setString(++k, user.getPhoneNumber());
             pstmt.setInt(++k, user.getAge());
+            pstmt.setLong(++k, id);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new UserException(String.format(UserWarnings.USER_UPDATE_FAILURE, id));
@@ -169,22 +152,17 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void createUser(User user) {
-        Connection con = null;
-        try {
-            con = connectionProvider.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        Connection con = connectionProvider.getConnection();
         PreparedStatement stmt = null;
         try {
-            String sql = queries.getQuery(UserOperations.CREATE_USER.getOperationName());
+            String sql = queries.getQuery(UserOperations.CREATE_USER.getName());
             stmt = con.prepareStatement(sql);
             int k = 0;
-            stmt.setString(++k, DbUtils.escapeForPstmt(user.getFamilyName()));
-            stmt.setString(++k, DbUtils.escapeForPstmt(user.getGivenName()));
-            stmt.setString(++k, DbUtils.escapeForPstmt(user.getPhoneNumber()));
+            stmt.setString(++k, user.getFamilyName());
+            stmt.setString(++k, user.getGivenName());
+            stmt.setString(++k, user.getPhoneNumber());
             stmt.setInt(++k, user.getAge());
-            stmt.executeQuery();
+            stmt.executeUpdate();
         } catch (SQLException e) {
             throw new UserException(String.format(UserWarnings.USER_CREATE_FAILURE));
         } finally {

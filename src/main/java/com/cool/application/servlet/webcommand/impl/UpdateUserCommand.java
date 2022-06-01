@@ -27,8 +27,9 @@ public class UpdateUserCommand implements Command {
         AbstractUserBuilder builder = new HttpUserBuilder(req);
         User user = builder.buildUserWithAllFields();
         userService.updateUser(user);
+        System.out.println("User updated " + user );
         req.setAttribute(GlobalAttributes.USER, user);
-        return String.format("user?command=%s&id=%d", UserOperations.GET_USER_BY_ID, user.getId());
+        return String.format("user?command=%s&id=%d", UserOperations.GET_USER_BY_ID.getName(), user.getId());
     }
 
 }

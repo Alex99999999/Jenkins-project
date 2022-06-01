@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-4">
                         <form action="user" method = "get" class="d-flex">
-                              <input type="hidden" name="command" value="show_all_users">
+                              <input type="hidden" name="command" value="get_all_users">
                               <div class="col-4">
                                   <button class="btn btn-outline-secondary btn-md btn-block" type="submit">All users</button>
                               </div>
@@ -50,13 +50,13 @@ ${message}
             <td><input type="text" name = "given_name"
                     <c:choose>
                       <c:when test="${user == null}">
-                        placeholder="Enter given name"/>
+                        placeholder="Enter given name"
                       </c:when>
                       <c:otherwise>
-                        placeholder=${user.givenName}/>
+                        placeholder=${user.givenName}
                       </c:otherwise>
                     </c:choose>
-                required>
+                required/>
             </td>
         </tr>
         <tr>
@@ -64,13 +64,13 @@ ${message}
             <td><input type="text" name = "family_name"
                     <c:choose>
                       <c:when test="${user == null}">
-                        placeholder="Enter family name"/>
+                        placeholder="Enter family name"
                       </c:when>
                       <c:otherwise>
-                        placeholder=${user.familyName}/>
+                        placeholder=${user.familyName}
                       </c:otherwise>
                     </c:choose>
-                >
+                />
             </td>
         </tr>
         <tr>
@@ -78,37 +78,46 @@ ${message}
             <td><input type="text" name = "phone_number"
                     <c:choose>
                       <c:when test="${user == null}">
-                        placeholder="Enter phone number"/>
+                        placeholder="Enter phone number"
                       </c:when>
                       <c:otherwise>
-                        placeholder=${user.phoneNumber}/>
+                        placeholder=${user.phoneNumber}
                       </c:otherwise>
                     </c:choose>
-                >
+                />
             </td>
         </tr>
         <tr>
             <th>Age</th>
-            <td><input type="text" name = "age"
+            <td><input type="number" name = "age"
                     <c:choose>
                       <c:when test="${user == null}">
-                        placeholder="Enter age"/>
+                        placeholder="Enter age"
                       </c:when>
                       <c:otherwise>
-                        placeholder=${user.age}/>
+                        placeholder=${user.age}
                       </c:otherwise>
                     </c:choose>
-                >
+                />
             </td>
         </tr>
         </table>
 
     <hr>
 
+
+    !-- Here we should check ifuser is null. If null -> create. Otherwise -> update
+
     <input type="hidden" name="command" value = "update_user">
         <div class="d-grid gap-2 col-6 mx-auto">
-            <button class="btn btn-secondary btn-md btn-block" type="submit">Apply</button>
+            <button class="btn btn-secondary btn-md btn-block" type="submit">Update user</button>
         </div>
+
+    <input type="hidden" name="command" value = "update_user">
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button class="btn btn-secondary btn-md btn-block" type="submit">Create user</button>
+        </div>
+
 </form>
 
       <form action="user" method="get">

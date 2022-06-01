@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
@@ -32,13 +32,15 @@
                   </div>
          </nav>
 
+<hr>
+
 ${message}
 
-       <form action="user" method="post">
-             <input type="hidden" name="command" value="create_user">
-             <button class="btn btn-outline-dark btn-sm btn-block" type="submit">Create</button>
-       </form>
-
+<hr>
+        <a href="show_user_details.jsp">
+            <button class="btn btn-outline-dark btn-sm btn-block" type="submit">Create user</button>
+       </a>
+<hr>
        <table class="table table-striped table-hover">
         <thead class="table-light">
           <tr>
@@ -54,12 +56,12 @@ ${message}
         <c:forEach var="item" items="${user_list}">
         <tr>
             <td class="text-center">${item.id}</td>
-            <td class="text-center">${item.given_name}</td>
-            <td class="text-center">${item.family_name}</td>
+            <td class="text-center">${item.givenName}</td>
+            <td class="text-center">${item.familyName}</td>
             <td class="text-center">${item.age}</td>
             <td>
-                <form action="user" method="post">
-                    <input type="hidden" name="command" value="update_user">
+                <form action="user" method="get">
+                    <input type="hidden" name="command" value="get_user_by_id">
                     <input type="hidden" name="id" value=${item.id}>
                     <button class="btn btn-outline-dark btn-sm btn-block" type="submit">Update</button>
                  </form>

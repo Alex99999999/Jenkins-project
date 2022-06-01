@@ -18,18 +18,17 @@ public class CommandContainer {
     }
 
     public Command getCommand(String command) {
-        System.out.println("Command param " + command);
         return commands.getOrDefault(command, new DefaultCommand());
     }
 
     private void populateCommands() {
         commands = new HashMap<>();
-        commands.put(UserOperations.UPDATE_USER.getOperationName(), new UpdateUserCommand(applicationContext.getUserService()));
-        commands.put(UserOperations.GET_USER_BY_ID.getOperationName(), new GetUserByIdCommand(applicationContext.getUserService()));
-        commands.put(UserOperations.CREATE_USER.getOperationName(), new CreateUserCommand(applicationContext.getUserService()));
-        commands.put(UserOperations.GET_ALL_USERS.getOperationName(), new GetAllUsersCommand((applicationContext.getUserService())));
-        commands.put(UserOperations.GET_USER_BY_NAME.getOperationName(), new GetUserByFamilyNameCommand((applicationContext.getUserService())));
-        commands.put(UserOperations.DELETE_USER.getOperationName(), new DeleteUserCommand(applicationContext.getUserService()));
+        commands.put(UserOperations.UPDATE_USER.getName(), new UpdateUserCommand(applicationContext.getUserService()));
+        commands.put(UserOperations.GET_USER_BY_ID.getName(), new GetUserByIdCommand(applicationContext.getUserService()));
+        commands.put(UserOperations.CREATE_USER.getName(), new CreateUserCommand(applicationContext.getUserService()));
+        commands.put(UserOperations.GET_ALL_USERS.getName(), new GetAllUsersCommand((applicationContext.getUserService())));
+        commands.put(UserOperations.GET_USER_BY_FAMILY_NAME.getName(), new GetUserByFamilyNameCommand((applicationContext.getUserService())));
+        commands.put(UserOperations.DELETE_USER.getName(), new DeleteUserCommand(applicationContext.getUserService()));
     }
 
 }

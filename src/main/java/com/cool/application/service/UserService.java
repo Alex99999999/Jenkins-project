@@ -12,7 +12,7 @@ public interface UserService {
 
     User getUserById(long id);
 
-    User getUserByFamilyName(String name);
+    List<User> getUserByFamilyName(String name);
 
     void updateUser(User user);
 
