@@ -10,7 +10,7 @@ import java.util.Map;
 public class CommandContainer {
 
     private Map<String, Command> commands;
-    ApplicationContext applicationContext;
+    private final ApplicationContext applicationContext;
 
     public CommandContainer(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
