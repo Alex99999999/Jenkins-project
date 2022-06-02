@@ -14,7 +14,7 @@ public class Test implements DbConnectionProvider {
 
         try {
             Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://192.168.1.193:5432/coolcatsdb", "postgres", "postgres");
+            connection = DriverManager.getConnection("jdbc:postgresql://192.168.1.163:5432/coolcatsdb", "postgres", "postgres");
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
