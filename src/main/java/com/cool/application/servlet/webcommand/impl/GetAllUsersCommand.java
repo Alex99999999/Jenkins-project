@@ -19,9 +19,7 @@ public class GetAllUsersCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest req) {
-        System.out.println("GetAllUsersCommand ");
         List<User> users = userService.findAllUsers();
-        System.out.println("List of users " + users.size());
         req.setAttribute(GlobalAttributes.USER_LIST, users);
         return Pages.SHOW_ALL_USERS;
     }

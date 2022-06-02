@@ -13,7 +13,8 @@
   <hr>
      <div class="row center-block text-center">
           <h1> List of All Users </h1>
-      </div>
+     </div>
+
   <hr>
 
          <nav class="navbar navbar-light bg-light">
@@ -55,10 +56,10 @@ ${message}
 
         <c:forEach var="item" items="${user_list}">
         <tr>
-            <td class="text-center">${item.id}</td>
-            <td class="text-center">${item.givenName}</td>
-            <td class="text-center">${item.familyName}</td>
-            <td class="text-center">${item.age}</td>
+            <td class="text-center"><c:out value="${item.id}"/></td>
+            <td class="text-center"><c:out value="${item.givenName}"/></td>
+            <td class="text-center"><c:out value="${item.familyName}"/></td>
+            <td class="text-center"><c:out value="${item.familyName}"/></td>
             <td>
                 <form action="user" method="get">
                     <input type="hidden" name="command" value="get_user_by_id">
