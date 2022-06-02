@@ -20,7 +20,9 @@ public class AppContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext ctx = sce.getServletContext();
-        DbConnectionProvider dbConnectionProvider = new Test();
+//        DbConnectionProvider dbConnectionProvider = new Test(); //Hard coded DB creds
+        DbConnectionProvider dbConnectionProvider = new PostgresDbConnectionProviderImpl();
+
         Connection con = dbConnectionProvider.getConnection();
 
         ApplicationContext applicationContext = new PostgresApplicationContextImpl(dbConnectionProvider);
