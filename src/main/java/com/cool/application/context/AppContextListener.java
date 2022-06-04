@@ -3,7 +3,6 @@ package com.cool.application.context;
 import com.cool.application.context.impl.PostgresApplicationContextImpl;
 import com.cool.application.db.DbConnectionProvider;
 import com.cool.application.db.postgres.PostgresDbConnectionProviderImpl;
-import com.cool.application.db.postgres.Test;
 import com.cool.application.servlet.attributes.GlobalAttributes;
 import com.cool.application.servlet.webcommand.CommandContainer;
 
@@ -20,9 +19,7 @@ public class AppContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext ctx = sce.getServletContext();
-        DbConnectionProvider dbConnectionProvider = new Test(); //Hard coded DB creds
-//        DbConnectionProvider dbConnectionProvider = new PostgresDbConnectionProviderImpl();
-
+        DbConnectionProvider dbConnectionProvider = new PostgresDbConnectionProviderImpl();
         Connection con = dbConnectionProvider.getConnection();
 
         ApplicationContext applicationContext = new PostgresApplicationContextImpl(dbConnectionProvider);

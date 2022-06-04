@@ -1,40 +1,22 @@
 package com.cool.application.db.postgres;
 
 import com.cool.application.db.DbConnectionProvider;
-import com.cool.application.exception.db.DbException;
-import com.cool.application.notifications.warnings.DbWarnings;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class PostgresDbConnectionProviderImpl implements DbConnectionProvider {
 
-    private DataSource dataSource;
-
     @Override
     public Connection getConnection() {
-        setupConnectionDetails();
-        Connection con;
+        Connection connection = null;
         try {
-            con = dataSource.getConnection();
-        } catch (SQLException ex) {
-            throw new DbException(DbWarnings.DB_CONNECTION_FAILED, ex.getCause());
+            connection = DriverManager.getConnection("jdbc:postgresql://192.168.1.163:5432/coolcatsdb", "postgres", "postgres");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return con;
-    }
-
-    private void setupConnectionDetails() {
-        try {
-            Context initContext = new InitialContext();
-            Context envContext = (Context) initContext.lookup("java:/comp/env");
-            dataSource = (DataSource) envContext.lookup("jdbc/coolcatsDB");
-        } catch (NamingException e) {
-            throw new DbException(DbWarnings.DATA_BASE_INIT_FAILED, e.getCause());
-        }
+        return connection;
     }
 
 }
