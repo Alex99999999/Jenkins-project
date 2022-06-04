@@ -85,7 +85,7 @@ public class UserDaoImpl implements UserDao {
             if (rs == null) {
                 throw new UserException(UserWarnings.NOTHING_FOUND_PER_YOUR_REQUEST);
             }
-            if (rs.next()){
+            if (rs.next()) {
                 user = new DbUserBuilder(rs).buildUserWithAllFields();
             }
         } catch (SQLException e) {
@@ -110,14 +110,14 @@ public class UserDaoImpl implements UserDao {
             pstmt.setString(1, name);
             rs = pstmt.executeQuery();
             if (rs == null) {
-                throw new UserException(String.format(UserWarnings.USER_BY_NAME_NOT_FOUND, name));
+                throw new DbException(DbWarnings.NULLABLE_RESULT_SET);
             }
-            while (rs.next()){
+            while (rs.next()) {
                 User user = new DbUserBuilder(rs).buildUserWithAllFields();
                 users.add(user);
             }
         } catch (SQLException e) {
-            throw new UserException(String.format(UserWarnings.USER_BY_NAME_NOT_FOUND, name));
+            throw new DbException(DbWarnings.DB_OPERATION_FAILURE);
         } finally {
             DbUtils.close(rs);
             DbUtils.close(pstmt);

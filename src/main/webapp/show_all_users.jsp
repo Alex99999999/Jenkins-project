@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 
 <html>
 
@@ -21,7 +22,7 @@
                   <div class="container-fluid">
                       <div class="col-4">
                             <form action="user" method = "get" class="d-flex">
-                                <input type="hidden" name="command" value="get_user_by_name">
+                                <input type="hidden" name="command" value="get_user_by_family_name">
                                 <div class="col-8">
                                    <input class="form-control me-2" type="text" placeholder="Enter family name" name="family_name">
                                 </div>
@@ -30,12 +31,23 @@
                                 </div>
                             </form>
                       </div>
+                      <div class="col-4">
+                           <form action="user" method = "get" class="d-flex">
+                                 <input type="hidden" name="command" value="get_all_users">
+                                 <div class="col-4">
+                                     <button class="btn btn-outline-secondary btn-md btn-block" type="submit">All users</button>
+                                 </div>
+                           </form>
+                      </div>
                   </div>
          </nav>
 
 <hr>
 
-${message}
+
+ <div class="row center-block text-center">
+         <h4>${message}</h4>
+     </div>
 
 <hr>
         <a href="show_user_details.jsp">
@@ -56,10 +68,10 @@ ${message}
 
         <c:forEach var="item" items="${user_list}">
         <tr>
-            <td class="text-center"><c:out value="${item.id}"/></td>
-            <td class="text-center"><c:out value="${item.givenName}"/></td>
-            <td class="text-center"><c:out value="${item.familyName}"/></td>
-            <td class="text-center"><c:out value="${item.familyName}"/></td>
+            <td class="text-center">${item.id}</td>
+            <td class="text-center">${item.givenName}</td>
+            <td class="text-center">${item.familyName}</td>
+            <td class="text-center">${item.age}</td>
             <td>
                 <form action="user" method="get">
                     <input type="hidden" name="command" value="get_user_by_id">
@@ -77,7 +89,6 @@ ${message}
         </tr>
         </c:forEach>
         </table>
-
 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>

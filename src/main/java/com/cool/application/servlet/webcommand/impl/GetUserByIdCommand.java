@@ -28,7 +28,6 @@ public class GetUserByIdCommand implements Command {
     public String execute(HttpServletRequest req) {
         long id = Utils.parseLong(req.getParameter(UserParameters.ID));
         User user = userService.getUserById(id);
-        System.out.println("User found by id " + user);
         req.setAttribute(GlobalAttributes.USER, user);
         return Pages.USER_DETAILS_PAGE;
     }

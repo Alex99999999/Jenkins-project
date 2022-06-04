@@ -26,7 +26,7 @@ public class DeleteUserCommand implements Command {
     public String execute(HttpServletRequest req) {
         long id = Utils.parseLong(req.getParameter(UserParameters.ID));
         userService.deleteUser(id);
-        req.setAttribute(GlobalAttributes.MESSAGE, UserMessages.DELETE_SUCCESS);
+        req.getSession().setAttribute(GlobalAttributes.MESSAGE, UserMessages.DELETE_SUCCESS);
         return String.format("user?command=%s", UserOperations.GET_ALL_USERS.getName());
     }
 
