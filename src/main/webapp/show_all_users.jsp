@@ -39,6 +39,14 @@
                                  </div>
                            </form>
                       </div>
+                      <div class="col-4">
+                                 <div class="col-4">
+                                     <a href="show_user_details.jsp">
+                                         <button class="btn btn-outline-dark btn-sm btn-block" type="submit">Create user</button>
+                                    </a>
+                                 </div>
+                      </div>
+
                   </div>
          </nav>
 
@@ -49,10 +57,6 @@
          <h4>${message}</h4>
      </div>
 
-<hr>
-        <a href="show_user_details.jsp">
-            <button class="btn btn-outline-dark btn-sm btn-block" type="submit">Create user</button>
-       </a>
 <hr>
        <table class="table table-striped table-hover">
         <thead class="table-light">
